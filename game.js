@@ -1066,15 +1066,8 @@ rooms[0]=[
 var enemyTypes=[]
 enemyTypes[0]={
   markup:`
-    <div class="enemy jimmy">
-      <div class='eye right'></div>
-      <div class='eye left'></div>
-      <div class='mouth'></div>
-      <div class='arm right'></div>
-      <div class='arm left'></div>
-      <div class='leg right'></div>
-      <div class='leg left'></div>
-      <div class="die-text">crying</div>
+    <div class="enemy poop">
+      <div class="die-text">Cleansed</div>
     </div>
   `,
   animate:function(counter) {
@@ -1202,13 +1195,8 @@ enemyTypes[0]={
 }
 enemyTypes[1]={ // Bunny Definition
   markup:`
-    <div class="enemy bunny">
-      <div class="ear left"></div>
-      <div class="ear right"></div>
-      <div class="eye left"></div>
-      <div class="eye right"></div>
-      <div class="nose"></div>
-      <div class="die-text">crying</div>
+    <div class="enemy poop">
+      <div class="die-text">Cleansed</div>
     </div>
   `,
   animate:function(counter) {
