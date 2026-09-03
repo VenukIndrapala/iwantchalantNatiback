@@ -310,15 +310,20 @@
       /* Good ol' Jimmy */
       transition: opacity 0.8s ease-out; /* Extended transition for fade-out */
     }
-    .enemy.jimmy.fading-out {
+    .enemy.poop.fading-out {
       opacity: 0;
     }
-    .enemy.jimmy {
-      width: 35px;
-      height: 35px;
-      background: #FECEA8;
-      border-radius: 10px;
+    .enemy.poop {
+      width: 40px;
+      height: 50px;
+      background-image: url('poop-enemy.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
       position: relative; /* Needed for absolute positioning of die-text */
+    }
+    .enemy.poop .die-text {
+      color: #29B6F6; /* Soap-blue, fits the "Cleansed" theme */
     }
 .enemy .die-text { /* Common styles for all die-text */
       position: absolute;
@@ -339,128 +344,6 @@
       animation-duration: 0.7s;
       animation-fill-mode: forwards;
       animation-timing-function: ease-out;
-    }
-.enemy.jimmy .die-text {
-      color: #D32C1B; /* Specific color for Jimmy */
-    }
-    .enemy.jimmy .eye {
-      width: 10px; /* Larger eyes */
-      height: 10px; /* Larger eyes */
-      border-radius: 50%;
-      background: #333333; /* Softer black for eyes */
-      position: absolute;
-      top: 30%; /* Adjusted top position */
-    }
-    .enemy.jimmy .eye::after { /* Eye highlight */
-      content: '';
-      position: absolute;
-      top: 2px; /* Position of highlight within the eye */
-      left: 2px;  /* Position of highlight within the eye */
-      width: 3px; /* Size of the highlight */
-      height: 3px; /* Size of the highlight */
-      background: white;
-      border-radius: 50%;
-    }
-    .enemy.jimmy .eye.right {
-      right: 18%; /* Adjusted for new eye size */
-    }
-    .enemy.jimmy .eye.left {
-      left: 18%; /* Symmetrical positioning using left */
-    }
-    .enemy.jimmy .mouth {
-      position: absolute;
-      top: 65%; /* Lowered and adjusted for new eyes */
-      left: 50%;
-      transform: translateX(-50%); /* Center the mouth */
-      width: 10px;  /* Smaller and cuter mouth */
-      height: 2px; /* Thinner mouth line */
-      background: #333333; /* Softer black for mouth */
-      border-radius: 1px; /* Slightly rounded ends for the line */
-    }
-    .enemy.jimmy .arm {
-      position: absolute;
-      width: 20%;
-      height: 60%;
-      border-radius: 10px;
-      background: #FECEA8;
-      transform-origin: 50% 5%;
-      top: 5px;
-      transform: rotate(125deg);
-      z-index: -1;
-    }
-    .enemy.jimmy .arm.right {
-      right: 0;
-    }
-    .enemy.jimmy .arm.left {
-      left: 0;
-    }
-    /* Cute Bunny Enemy */
-    .enemy.bunny {
-      width: 40px;
-      height: 50px;
-      background: #f8c8dc; /* Light pink */
-      border-radius: 50% 50% 20px 20px;
-      position: relative;
-      /* transition is inherited from .enemy class */
-    }
-    .enemy.bunny.fading-out {
-      opacity: 0;
-    }
-    .enemy.bunny .ear {
-      position: absolute;
-      width: 12px;
-      height: 25px;
-      background: #f8c8dc;
-      border: 2px solid #e7b7ce;
-      border-bottom: none;
-      border-radius: 50% 50% 0 0;
-      top: -15px;
-    }
-    .enemy.bunny .ear.left {
-      left: 2px;
-      transform: rotate(-20deg);
-    }
-    .enemy.bunny .ear.right {
-      right: 2px;
-      transform: rotate(20deg);
-    }
-    .enemy.bunny .ear::before { /* Inner ear */
-      content: '';
-      position: absolute;
-      width: 6px;
-      height: 15px;
-      background: #ffe6f0; /* Lighter pink */
-      border-radius: 50% 50% 0 0;
-      left: 50%;
-      transform: translateX(-50%);
-      bottom: 0;
-    }
-    .enemy.bunny .eye {
-      position: absolute;
-      width: 6px;
-      height: 8px;
-      background: #333;
-      border-radius: 50%;
-      top: 15px;
-    }
-    .enemy.bunny .eye.left {
-      left: 10px;
-    }
-    .enemy.bunny .eye.right {
-      right: 10px;
-    }
-    .enemy.bunny .nose {
-      position: absolute;
-      width: 8px;
-      height: 5px;
-      background: #ff80b3; /* Rosy pink */
-      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-      top: 25px;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-.enemy.bunny .die-text {
-      color: red; /* Specific color for Bunny */
     }
     /* Hit Particles */
     .particle {
