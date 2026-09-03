@@ -700,6 +700,7 @@ class Smoke {
         this.parentContainer=options.parentContainer;
         this.getPlayer = options.getPlayer; 
         this.getGameCounter = options.getGameCounter; 
+        this.onEnemyDefeated = options.onEnemyDefeated;
         this.enemies=[];
         options.startUpdating(this.updateEnemies.bind(this))
         this.createEnemy=this.createEnemy.bind(this);
@@ -812,9 +813,10 @@ class Game {
     // The container element
     this.container=$('.container');
     this.gameOverMessageEl = $('#gameOverMessage');
-    this.timerDisplayEl = $('#timerDisplay'); // Changed from scoreDisplayEl
-    this.elapsedTime = 0; // Time in seconds
-    this.lastTime = performance.now(); // For delta time calculation
+    this.gameOverTextEl = $('#gameOverText');
+    this.killCounterDisplayEl = $('#killCounterDisplay');
+    this.enemiesDefeated = 0; // Number of enemies destroyed so far
+    this.killTarget = 10; // Number of enemies to destroy to win
     this.gameOver = false;
     
     // Updating
@@ -830,7 +832,8 @@ class Game {
       parentContainer:this.container,
       startUpdating:this.startUpdating.bind(this),
       getGameCounter: () => this.gameCounter, // Pass a way to get gameCounter
-      getPlayer: () => this.player // Pass a getter function for the player
+      getPlayer: () => this.player, // Pass a getter function for the player
+      onEnemyDefeated: this.handleEnemyDefeated.bind(this) // Notified when an enemy is destroyed
     })
     // Rooms
     this.roomHandler=new RoomHandler({
@@ -870,8 +873,18 @@ class Game {
     this.updateQueue.push(func);
   }
   
-  updateTimerDisplay() {
-    this.timerDisplayEl.text('Time: ' + this.elapsedTime.toFixed(1) + 's');
+  updateKillCounterDisplay() {
+    this.killCounterDisplayEl.text('Defeated: ' + this.enemiesDefeated + '/' + this.killTarget);
+  }
+  
+  // Called by the EnemyHandler whenever an enemy is destroyed
+  handleEnemyDefeated() {
+    if (this.gameOver) return;
+    this.enemiesDefeated++;
+    this.updateKillCounterDisplay();
+    if (this.enemiesDefeated >= this.killTarget) {
+      this.handleWin();
+    }
   }
   
   // Updating the queue
@@ -880,14 +893,7 @@ class Game {
       window.requestAnimationFrame(this.update.bind(this)); // Keep animation frame for restart timer
       return;
     }
-    const currentTime = performance.now();
-    const deltaTime = (currentTime - this.lastTime) / 1000; // deltaTime in seconds
-    this.lastTime = currentTime;
-    this.elapsedTime += deltaTime; // Accumulate time more accurately
-    
     this.gameCounter++; // Keep gameCounter for other periodic logic (e.g., enemy spawning)
-    
-    this.updateTimerDisplay(); // Update display every frame with the new precise time
     
     for (var i=0;i<this.updateQueue.length;i++) {
       this.updateQueue[i](); // Player and enemies move here
@@ -921,6 +927,7 @@ class Game {
   }
   handleGameOver() {
     this.gameOver = true;
+    this.gameOverTextEl.text('GAME OVER');
     this.gameOverMessageEl.show();
     
     // Optionally, make player visually react, e.g., by hiding or changing appearance
@@ -929,11 +936,19 @@ class Game {
       this.resetGame();
     }, 3000); // Restart after 3 seconds
   }
+  handleWin() {
+    this.gameOver = true;
+    this.gameOverTextEl.text('YOU WIN!');
+    this.gameOverMessageEl.show();
+    
+    setTimeout(() => {
+      this.resetGame();
+    }, 3000); // Restart after 3 seconds
+  }
   resetGame() {
     this.gameOverMessageEl.hide();
-    this.elapsedTime = 0; // Reset timer
-    this.lastTime = performance.now(); // Reset lastTime for accurate delta on restart
-    this.updateTimerDisplay(); // Update timer display
+    this.enemiesDefeated = 0; // Reset kill count
+    this.updateKillCounterDisplay(); // Update kill counter display
     // Reset player
     this.player.x = window.innerWidth / 2;
     this.player.y = window.innerHeight / 2;
@@ -1146,6 +1161,7 @@ enemyTypes[0]={
     if (this.currentHealth <= 0) {
       if (!this.hit) { // Ensure death sequence only runs once
          this.hit = true; // Mark as "hit" for death sequence logic
+         if (this.enemyHandlerRef && this.enemyHandlerRef.onEnemyDefeated) this.enemyHandlerRef.onEnemyDefeated();
          const dieTextDelay = 100; 
         
          setTimeout(() => {
@@ -1269,6 +1285,7 @@ enemyTypes[1]={ // Bunny Definition
     if (this.currentHealth <= 0) {
       if (!this.hit) { // Ensure death sequence only runs once
         this.hit = true; // Mark as "hit" for death sequence logic
+        if (this.enemyHandlerRef && this.enemyHandlerRef.onEnemyDefeated) this.enemyHandlerRef.onEnemyDefeated();
         const dieTextDelay = 100; 
         setTimeout(() => {
           if(this.el) this.el.find('.die-text').addClass('animate-cry');
