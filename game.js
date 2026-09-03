@@ -90,7 +90,7 @@ class Player {
     // The Markup
     this.el=$(`
       <div class="player">
-        <p class="txt">Bang!❤️</p>
+        <p class="txt"></p>
         <div class="reload-progress-bar-container">
             <div class="reload-progress-bar"></div>
         </div>
