@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--Tiktok "Meowish"
+      --Code made in👉 Rosebud.ai
+      --To get the code go to Rosebud.ai and search "Cute Gun Shooting" -->
+    <title>Cute Gun Shotting</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <style>
+    .txt{
+      transform: translate(-15px, -60px);
+      z-index: 999;
+      font-size: 1.4rem;
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: 700;
+      pointer-events: none;
+      color: #e64c78;
+      width: 20rem;
+      opacity: 0;
+      transition: 0.2s;
+    }
+#timerDisplay {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      font-size: 2rem;
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: 700;
+      color: #FFD700; /* Gold color */
+      z-index: 1000;
+      text-shadow: 2px 2px 0px #000000; /* Black stroke */
+    }
+    #ammoDisplay {
+      position: absolute;
+      top: 60px; /* Below the timer */
+      left: 20px;
+      font-size: 1.5rem; /* Slightly smaller than timer */
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: 700;
+      color: #4CAF50; /* Green for ammo, could be different */
+      z-index: 1000;
+      text-shadow: 1px 1px 0px #000000; /* Black stroke */
+    }
+    .txt.show {
+    opacity: 1;
+    transform: translate(-15px, -80px); 
+    }
+
+    body {
+      margin: 0;
+      background: #2A363B;
+      overflow: hidden;
+    }
+
+    .container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+    }
+    @keyframes screenShake {
+      0%, 100% { transform: translate(0, 0); }
+      25% { transform: translate(2px, 2px); }
+      50% { transform: translate(-2px, -2px); }
+      75% { transform: translate(2px, -2px); }
+    }
+    .screen-shake {
+      animation: screenShake 0.1s linear;
+    }
+    /* The Player */
+    .player {
+      position: absolute;
+      top: 200px;
+      left: 200px;
+      transform: translateX(-50%) translateY(-50%);
+      width: 45px;
+      height: 55px;
+      background: white;
+      border-radius: 10px;
+      z-index: 5;
+      /* Reload Progress Bar Container */
+      /* The Hat */
+      /* Eyes */
+      /* The Mouth */
+      /* The Shirt (and tie) */
+      /* The Arms */
+      /* Legs */
+      /* Shadow */
+    }
+    .player .hat {
+      position: absolute;
+      top: 15%;
+      transform: translateY(-100%);
+      width: 100%;
+      height: 34%;
+      background: #D32C1B;
+      border-top-right-radius: 10px;
+      border-top-left-radius: 10px;
+    }
+    .player .hat::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 100%;
+      width: 35%;
+      height: 2px;
+      background: #D32C1B;
+      transform: translateY(-100%);
+    }
+    .player .eye {
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      background: black;
+      top: 25%;
+    }
+    .player .eye.right {
+      right: 10%;
+    }
+    .player .eye.left {
+      right: 50%;
+    }
+    .player .mouth {
+      position: absolute;
+      top: 40%;
+      width: 20%;
+      height: 2px;
+      background: black;
+      left: 65%;
+    }
+    .player .shirt {
+      position: absolute;
+      bottom: -1px;
+      width: 105%;
+      height: 50%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #CF2213;
+      border-radius: 10px;
+      border-top-right-radius: 0px;
+      border-top-left-radius: 0px;
+      overflow: hidden;
+      /* The Undershirt */
+    }
+    .player .shirt .tie {
+      background: #E31B15;
+      width: 10%;
+      height: 70%;
+      position: absolute;
+      top: 0;
+      left: 55%;
+      border-bottom-right-radius: 5px;
+      border-bottom-left-radius: 55px;
+    }
+    .player .shirt .under {
+      position: absolute;
+      left: 60%;
+      top: 0px;
+      width: 40%;
+      height: 99%;
+      transform: translateX(-50%);
+      background: #FFF5F4;
+    }
+    .player .arm {
+      position: absolute;
+      width: 25%;
+      height: 40%;
+      background: white;
+      border-radius: 10px;
+      top: 60%;
+      transform-origin: 50% 5%;
+    }
+    .player .arm.right {
+      right: -10%;
+      transform: rotate(-1.5rad);
+      z-index: 0;
+    }
+    .player .arm.right .gun {
+      position: absolute;
+      top: 80%;
+      left: 100%;
+      width: 100%;
+      height: 150%;
+      background: black;
+      transform-origin: -100% 0%;
+    }
+    .player .arm.right .gun::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 250%;
+      height: 40%;
+      background: black;
+    }
+    .player .arm.right .gun .barrel {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      width: 1px;
+      height: 1px;
+      transform: translateX(-50%) translateY(-50%);
+    }
+    .player .arm.left {
+      left: -5%;
+    }
+    .player .arm .sleeve {
+      position: absolute;
+      top: 0;
+      left: 0;
+      border-radius: 10px;
+      background: #E31B15;
+      width: 100%;
+      height: 50%;
+      border-bottom-right-radius: 0px;
+      border-bottom-left-radius: 0px;
+    }
+    .player .leg {
+      position: absolute;
+      top: 80%;
+      width: 25%;
+      height: 45%;
+      background: white;
+      border-radius: 10px;
+      z-index: -1;
+      transform-origin: 50% 5%;
+      transform: translateX(-50%);
+    }
+    .player .leg.right {
+      right: -5%;
+    }
+    .player .leg.left {
+      left: 20%;
+    }
+    .player .leg .pant {
+      position: absolute;
+      width: 100%;
+      height: 80%;
+      top: 0;
+      left: 0;
+      background: #4093BD;
+    }
+    .player::after {
+      content: "";
+      position: absolute;
+      top: 115%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: RGBA(0, 0, 0, 0.2);
+      z-index: -2;
+      width: 100%;
+      height: 10px;
+      border-radius: 50%;
+    }
+    .reload-progress-bar-container {
+      position: absolute;
+      bottom: 110%; /* Positioned above the player */
+      left: 50%;
+      transform: translateX(-50%);
+      width: 40px; /* Match player-ish width */
+      height: 5px;
+      background-color: rgba(0, 0, 0, 0.2);
+      border-radius: 3px;
+      overflow: hidden;
+      display: none; /* Hidden by default */
+      z-index: 6; /* Above player, below bullets/UI */
+    }
+    .reload-progress-bar {
+      width: 0%; /* Starts empty */
+      height: 100%;
+      background-color: #FFC107; /* Amber color, same as reloading text */
+      border-radius: 3px;
+      transition: width 0.1s linear; /* Smooth fill, adjust timing if needed */
+    }
+    /* Bullets */
+    .bullet {
+      position: absolute;
+      width: 25px;
+      height: 15px;
+      background: yellow;
+      transform: translateX(-50%) translateY(-50%);
+      z-index: 10;
+    }
+
+    /* Bullet Flash */
+    .flash {
+      position: absolute;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: white;
+      transform: translateX(-50%) translateY(-50%);
+    }
+
+    /* Smoke Clouds */
+    .cloud {
+      position: absolute;
+      background: Silver;
+      border-radius: 50%;
+      transform: translateX(-50%) translateY(-50%);
+    }
+
+    /* Enemies */
+    .enemy {
+      position: absolute;
+      transform: translateX(-50%) translateY(-50%);
+      /* Good ol' Jimmy */
+      transition: opacity 0.8s ease-out; /* Extended transition for fade-out */
+    }
+    .enemy.jimmy.fading-out {
+      opacity: 0;
+    }
+    .enemy.jimmy {
+      width: 35px;
+      height: 35px;
+      background: #FECEA8;
+      border-radius: 10px;
+      position: relative; /* Needed for absolute positioning of die-text */
+    }
+.enemy .die-text { /* Common styles for all die-text */
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-weight: bold;
+      font-size: 1.2em;
+      font-family: Arial, sans-serif;
+      display: none; 
+      pointer-events: none;
+      text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;
+      opacity: 0; /* Start invisible for animation */
+    }
+.enemy .die-text.animate-cry {
+      display: block !important; 
+      animation-name: cryAnimation;
+      animation-duration: 0.7s;
+      animation-fill-mode: forwards;
+      animation-timing-function: ease-out;
+    }
+.enemy.jimmy .die-text {
+      color: #D32C1B; /* Specific color for Jimmy */
+    }
+    .enemy.jimmy .eye {
+      width: 10px; /* Larger eyes */
+      height: 10px; /* Larger eyes */
+      border-radius: 50%;
+      background: #333333; /* Softer black for eyes */
+      position: absolute;
+      top: 30%; /* Adjusted top position */
+    }
+    .enemy.jimmy .eye::after { /* Eye highlight */
+      content: '';
+      position: absolute;
+      top: 2px; /* Position of highlight within the eye */
+      left: 2px;  /* Position of highlight within the eye */
+      width: 3px; /* Size of the highlight */
+      height: 3px; /* Size of the highlight */
+      background: white;
+      border-radius: 50%;
+    }
+    .enemy.jimmy .eye.right {
+      right: 18%; /* Adjusted for new eye size */
+    }
+    .enemy.jimmy .eye.left {
+      left: 18%; /* Symmetrical positioning using left */
+    }
+    .enemy.jimmy .mouth {
+      position: absolute;
+      top: 65%; /* Lowered and adjusted for new eyes */
+      left: 50%;
+      transform: translateX(-50%); /* Center the mouth */
+      width: 10px;  /* Smaller and cuter mouth */
+      height: 2px; /* Thinner mouth line */
+      background: #333333; /* Softer black for mouth */
+      border-radius: 1px; /* Slightly rounded ends for the line */
+    }
+    .enemy.jimmy .arm {
+      position: absolute;
+      width: 20%;
+      height: 60%;
+      border-radius: 10px;
+      background: #FECEA8;
+      transform-origin: 50% 5%;
+      top: 5px;
+      transform: rotate(125deg);
+      z-index: -1;
+    }
+    .enemy.jimmy .arm.right {
+      right: 0;
+    }
+    .enemy.jimmy .arm.left {
+      left: 0;
+    }
+    /* Cute Bunny Enemy */
+    .enemy.bunny {
+      width: 40px;
+      height: 50px;
+      background: #f8c8dc; /* Light pink */
+      border-radius: 50% 50% 20px 20px;
+      position: relative;
+      /* transition is inherited from .enemy class */
+    }
+    .enemy.bunny.fading-out {
+      opacity: 0;
+    }
+    .enemy.bunny .ear {
+      position: absolute;
+      width: 12px;
+      height: 25px;
+      background: #f8c8dc;
+      border: 2px solid #e7b7ce;
+      border-bottom: none;
+      border-radius: 50% 50% 0 0;
+      top: -15px;
+    }
+    .enemy.bunny .ear.left {
+      left: 2px;
+      transform: rotate(-20deg);
+    }
+    .enemy.bunny .ear.right {
+      right: 2px;
+      transform: rotate(20deg);
+    }
+    .enemy.bunny .ear::before { /* Inner ear */
+      content: '';
+      position: absolute;
+      width: 6px;
+      height: 15px;
+      background: #ffe6f0; /* Lighter pink */
+      border-radius: 50% 50% 0 0;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 0;
+    }
+    .enemy.bunny .eye {
+      position: absolute;
+      width: 6px;
+      height: 8px;
+      background: #333;
+      border-radius: 50%;
+      top: 15px;
+    }
+    .enemy.bunny .eye.left {
+      left: 10px;
+    }
+    .enemy.bunny .eye.right {
+      right: 10px;
+    }
+    .enemy.bunny .nose {
+      position: absolute;
+      width: 8px;
+      height: 5px;
+      background: #ff80b3; /* Rosy pink */
+      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+      top: 25px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+.enemy.bunny .die-text {
+      color: red; /* Specific color for Bunny */
+    }
+    /* Hit Particles */
+    .particle {
+      position: absolute;
+      width: 6px; /* particleBaseSize */
+      height: 6px; /* particleBaseSize */
+      background-color: #FFD700; /* Gold */
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 100; /* Above most other game elements */
+      opacity: 1;
+      transform: scale(1);
+      /* particleAnimationDuration is 300ms, defined in JS */
+      transition: left 0.3s cubic-bezier(0.17, 0.67, 0.83, 0.67), 
+                  top 0.3s cubic-bezier(0.17, 0.67, 0.83, 0.67), 
+                  opacity 0.3s ease-out, 
+                  transform 0.3s ease-out;
+    }
+@keyframes cryAnimation {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.5);
+      }
+      20% { /* Quickly appear and grow */
+        opacity: 1;
+        transform: translate(-50%, calc(-50% - 10px)) scale(1.2);
+      }
+      70% { /* Hold, slight movement */
+        opacity: 1;
+        transform: translate(-50%, calc(-50% - 15px)) scale(1.15) rotate(-3deg);
+      }
+      100% { /* Fade out and move up further */
+        opacity: 0;
+        transform: translate(-50%, calc(-50% - 30px)) scale(0.8) rotate(5deg);
+      }
+    }
+    #gameOverMessage {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 48px;
+      color: white;
+      background-color: rgba(0,0,0,0.8);
+      padding: 30px;
+      border-radius: 10px;
+      z-index: 1000;
+      display: none;
+      text-align: center;
+      font-family: Arial, Helvetica, sans-serif;
+      border: 3px solid #e64c78;
+    }
+    #gameOverMessage small {
+      display: block;
+      font-size: 24px;
+      margin-top: 10px;
+    }
+    </style>
+  </head>
+  <body>
+    <div class='container'></div>
+    <div id="timerDisplay">Time: 0s</div>
+    <div id="ammoDisplay">Ammo: 0/0</div>
+    <div id="gameOverMessage">
+      GAME OVER
+      <small>Restarting...</small>
+    </div>
+    <script src="game.js" defer></script>
+  </body>
+</html>
