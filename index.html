@@ -21,7 +21,7 @@
       opacity: 0;
       transition: 0.2s;
     }
-#timerDisplay {
+#killCounterDisplay {
       position: absolute;
       top: 20px;
       left: 20px;
@@ -522,10 +522,10 @@
   </head>
   <body>
     <div class='container'></div>
-    <div id="timerDisplay">Time: 0s</div>
+    <div id="killCounterDisplay">Defeated: 0/10</div>
     <div id="ammoDisplay">Ammo: 0/0</div>
     <div id="gameOverMessage">
-      GAME OVER
+      <span id="gameOverText">GAME OVER</span>
       <small>Restarting...</small>
     </div>
     <script src="game.js" defer></script>
