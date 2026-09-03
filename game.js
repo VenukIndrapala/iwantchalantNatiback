@@ -950,8 +950,7 @@ class Game {
         // Matrix loading screen finished; hand off to the next game
         $('#matrixOverlay').hide();
         $('#nextGamePlaceholder').show();
-        // NOTE: This is a placeholder. Replace this block with whatever
-        // starts/loads the next game once it's built.
+        if (window.startBunnyGame) window.startBunnyGame();
       }, 7000); // Matrix loading screen duration
     }, 4000); // How long the WIN message stays on screen first
   }
