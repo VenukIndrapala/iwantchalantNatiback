@@ -119,13 +119,34 @@
     const p = settings.player;
     p.node.style.left = p.x + 'px';
     p.node.style.top = p.y + 'px';
+    p.node.style.setProperty('--facing', p.facing);
     p.node.style.transform = `translate(-50%, -50%) scaleX(${p.facing})`;
+  }
+
+  function spawnHugHearts(x, y) {
+    for (let i = 0; i < 3; i++) {
+      const heart = document.createElement('div');
+      heart.className = 'bunny-hug-heart';
+      heart.textContent = '\u2764\ufe0f';
+      heart.style.left = (x + rand(-8, 8)) + 'px';
+      heart.style.top = (y - 20 + rand(-4, 4)) + 'px';
+      heart.style.animationDelay = (i * 150) + 'ms';
+      settings.world.appendChild(heart);
+      setTimeout(() => heart.remove(), 900 + i * 150 + 50);
+    }
   }
 
   function startHug(bunny) {
     stopSprite(settings.player);
     settings.controlPos = null; // cancel any pending walk target
     settings.currentHug = bunny;
+
+    // Step the player right up against the bunny and play the hug animation on both
+    settings.player.x = bunny.x;
+    settings.player.y = bunny.y + 6; // slight offset so both sprites stay visible, embracing
+    settings.player.node.classList.add('hugging');
+    bunny.node.classList.add('hugging');
+    spawnHugHearts(bunny.x, bunny.y);
 
     const bar = settings.hugProgressBarEl;
     const container = settings.hugProgressContainerEl;
@@ -151,6 +172,8 @@
   function finishHug(bunny) {
     bunny.sad = false;
     bunny.node.style.backgroundImage = "url('bunny-happy.png')";
+    bunny.node.classList.remove('hugging');
+    settings.player.node.classList.remove('hugging');
     settings.hugProgressContainerEl.style.display = 'none';
     settings.currentHug = null;
 
