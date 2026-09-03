@@ -937,13 +937,23 @@ class Game {
     }, 3000); // Restart after 3 seconds
   }
   handleWin() {
-    this.gameOver = true;
+    this.gameOver = true; // Freezes the shooting game immediately (update loop halts enemy/bullet/player logic)
     this.gameOverTextEl.text('YOU WIN!');
     this.gameOverMessageEl.show();
     
     setTimeout(() => {
-      this.resetGame();
-    }, 3000); // Restart after 3 seconds
+      // Swap the WIN message for the matrix loading-screen animation
+      this.gameOverMessageEl.hide();
+      $('#matrixOverlay').show();
+      
+      setTimeout(() => {
+        // Matrix loading screen finished; hand off to the next game
+        $('#matrixOverlay').hide();
+        $('#nextGamePlaceholder').show();
+        // NOTE: This is a placeholder. Replace this block with whatever
+        // starts/loads the next game once it's built.
+      }, 7000); // Matrix loading screen duration
+    }, 4000); // How long the WIN message stays on screen first
   }
   resetGame() {
     this.gameOverMessageEl.hide();
