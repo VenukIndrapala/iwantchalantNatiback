@@ -213,6 +213,11 @@
     msg.className = 'bunny-game-end-message';
     msg.innerHTML = '<span>All Bunnies Are Happy!</span><small>Great job \u2764\ufe0f</small>';
     settings.container.appendChild(msg);
+
+    setTimeout(() => {
+      msg.remove();
+      if (window.startFlowerBlossom) window.startFlowerBlossom();
+    }, 2500); // Brief pause on the win message before the flower loading screen
   }
 
   function loop() {
