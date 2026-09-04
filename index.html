@@ -14213,11 +14213,6 @@
     }
     .bunny-game-player.hugging {
       transition: left 0.25s ease-out, top 0.25s ease-out;
-      animation: bunnyHugPulsePlayer 0.4s ease-in-out infinite;
-    }
-    @keyframes bunnyHugPulsePlayer {
-      0%, 100% { transform: translate(-50%, -50%) scaleX(var(--facing, 1)) scale(1); }
-      50% { transform: translate(-50%, -50%) scaleX(var(--facing, 1)) scale(1.15); }
     }
     .bunny-game-bunny {
       position: absolute;
@@ -14229,11 +14224,7 @@
       z-index: 4;
     }
     .bunny-game-bunny.hugging {
-      animation: bunnyHugPulseBunny 0.4s ease-in-out infinite;
-    }
-    @keyframes bunnyHugPulseBunny {
-      0%, 100% { transform: translate(-50%, -50%) scale(1); }
-      50% { transform: translate(-50%, -50%) scale(1.15); }
+      transition: left 0.25s ease-out, top 0.25s ease-out;
     }
     .bunny-hug-heart {
       position: absolute;
