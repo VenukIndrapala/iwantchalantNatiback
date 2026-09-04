@@ -9,6 +9,8 @@
   const PLAYER_SPEED = 2.2;     // px per frame
   const HUG_RADIUS = 26;        // px distance that auto-triggers a hug
   const HUG_DURATION = 1400;    // ms for the hug progress bar to fill
+  const HUG_OVERLAP_OFFSET = 12;    // px from bunny's center while embracing (side-by-side, overlapping)
+  const HUG_APART_OFFSET = 26;      // px from bunny's center once the hug finishes (standing apart)
   const TOTAL_BUNNIES = 45;
   const TOTAL_TREES = 60;
   const ARRIVE_THRESHOLD = 4;   // px considered "arrived" at controlPos
@@ -119,7 +121,6 @@
     const p = settings.player;
     p.node.style.left = p.x + 'px';
     p.node.style.top = p.y + 'px';
-    p.node.style.setProperty('--facing', p.facing);
     p.node.style.transform = `translate(-50%, -50%) scaleX(${p.facing})`;
   }
 
@@ -141,9 +142,12 @@
     settings.controlPos = null; // cancel any pending walk target
     settings.currentHug = bunny;
 
-    // Step the player right up against the bunny and play the hug animation on both
-    settings.player.x = bunny.x;
-    settings.player.y = bunny.y + 6; // slight offset so both sprites stay visible, embracing
+    // Stand shoulder-to-shoulder with the bunny, overlapping slightly, on
+    // whichever side the player approached from (facing 1 = came from the
+    // left, so the player ends up on the bunny's left, and vice versa).
+    const side = settings.player.facing >= 0 ? -1 : 1;
+    settings.player.x = bunny.x + side * HUG_OVERLAP_OFFSET;
+    settings.player.y = bunny.y;
     settings.player.node.classList.add('hugging');
     bunny.node.classList.add('hugging');
     spawnHugHearts(bunny.x, bunny.y);
@@ -163,22 +167,29 @@
       if (pct < 100) {
         settings.hugTick = requestAnimationFrame(tick);
       } else {
-        finishHug(bunny);
+        finishHug(bunny, side);
       }
     }
     settings.hugTick = requestAnimationFrame(tick);
   }
 
-  function finishHug(bunny) {
+  function finishHug(bunny, side) {
     bunny.sad = false;
     bunny.node.style.backgroundImage = "url('bunny-happy.png')";
-    bunny.node.classList.remove('hugging');
-    settings.player.node.classList.remove('hugging');
     settings.hugProgressContainerEl.style.display = 'none';
-    settings.currentHug = null;
+
+    // Step apart to stand normally next to the (now happy) bunny, still on the same side
+    settings.player.x = bunny.x + side * HUG_APART_OFFSET;
+    settings.player.y = bunny.y;
 
     settings.sadBunniesRemaining--;
     updateCounterDisplay();
+
+    setTimeout(() => {
+      bunny.node.classList.remove('hugging');
+      settings.player.node.classList.remove('hugging');
+      settings.currentHug = null;
+    }, 250); // matches the CSS position-transition duration
 
     if (settings.sadBunniesRemaining <= 0) {
       endGame();
