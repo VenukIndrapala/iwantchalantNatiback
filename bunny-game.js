@@ -4,8 +4,8 @@
 // it happy. Game ends once every sad bunny has been hugged.
 
 (function () {
-  const WORLD_WIDTH = 3000;
-  const WORLD_HEIGHT = 3000;
+  const WORLD_WIDTH = 1200;
+  const WORLD_HEIGHT = 1200;
   const PLAYER_SPEED = 2.2;     // px per frame
   const HUG_RADIUS = 26;        // px distance that auto-triggers a hug
   const HUG_DURATION = 1400;    // ms for the hug progress bar to fill
