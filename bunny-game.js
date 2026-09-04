@@ -11,7 +11,7 @@
   const HUG_DURATION = 1400;    // ms for the hug progress bar to fill
   const HUG_OVERLAP_OFFSET = 12;    // px from bunny's center while embracing (side-by-side, overlapping)
   const HUG_APART_OFFSET = 26;      // px from bunny's center once the hug finishes (standing apart)
-  const TOTAL_BUNNIES = 45;
+  const TOTAL_BUNNIES = 10;
   const TOTAL_TREES = 60;
   const ARRIVE_THRESHOLD = 4;   // px considered "arrived" at controlPos
 
@@ -85,6 +85,17 @@
   function createHudElements() {
     const counter = document.createElement('div');
     counter.className = 'bunny-game-counter';
+
+    const mainLine = document.createElement('div');
+    mainLine.className = 'bunny-game-counter-main';
+    counter.appendChild(mainLine);
+    settings.counterMainEl = mainLine;
+
+    const subLine = document.createElement('div');
+    subLine.className = 'bunny-game-counter-sub';
+    subLine.textContent = "I couldn't make them hug but that is what they are doing";
+    counter.appendChild(subLine);
+
     settings.container.appendChild(counter);
     settings.counterEl = counter;
     updateCounterDisplay();
@@ -100,7 +111,7 @@
   }
 
   function updateCounterDisplay() {
-    settings.counterEl.textContent = 'Sad Bunnies Left: ' + settings.sadBunniesRemaining;
+    settings.counterMainEl.textContent = 'Sad Bunnies Left: ' + settings.sadBunniesRemaining;
   }
 
   function handleWalk() {
