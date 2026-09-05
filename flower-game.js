@@ -23,6 +23,8 @@
         .set(branchesRandomOrderBottom, {transformOrigin: 'bottom center'})
         .set('#BranchGroup-left-1', {transformOrigin: '0% 20%'})
         .set('#BranchGroup-right-16', {transformOrigin: '100% 20%'})
+        .set('#BranchGroup-topleft-1', {transformOrigin: 'top left'})
+        .set('#BranchGroup-topright-1', {transformOrigin: 'top right'})
         .set(branchesRandomOrder, {scale: 0})
         .set(".flower-blossom-container", {autoAlpha: 1});
       return tl;
@@ -60,7 +62,9 @@
       const tl = new TimelineMax({yoyo: true, repeat: -1});
       const currentBranch = $(this.target);
       var currentBranchRotation = (currentBranch.data('position') === "left") ? -10 :
-      (currentBranch.data('position') === "right") ? 5 : 10;
+      (currentBranch.data('position') === "right") ? 5 :
+      (currentBranch.data('position') === "top-left") ? 6 :
+      (currentBranch.data('position') === "top-right") ? -6 : 10;
 
       tl.staggerTo(currentBranch, 2 + Math.random(), {rotation: currentBranchRotation, ease: Sine.easeInOut}, Math.random() / 1.2);
 
