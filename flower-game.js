@@ -23,8 +23,8 @@
         .set(branchesRandomOrderBottom, {transformOrigin: 'bottom center'})
         .set('#BranchGroup-left-1', {transformOrigin: '0% 20%'})
         .set('#BranchGroup-right-16', {transformOrigin: '100% 20%'})
-        .set('#BranchGroup-topleft-1', {transformOrigin: 'top left'})
-        .set('#BranchGroup-topright-1', {transformOrigin: 'top right'})
+        .set('#BranchGroup-topleft-1', {transformOrigin: '0% 20%'})
+        .set('#BranchGroup-topright-1', {transformOrigin: '100% 20%'})
         .set(branchesRandomOrder, {scale: 0})
         .set(".flower-blossom-container", {autoAlpha: 1});
       return tl;
