@@ -14660,6 +14660,7 @@ html {
 }
 
 .astrobear__container {
+  display: none;
   position: absolute;
   overflow: hidden;
   inset: 0;
@@ -14671,6 +14672,7 @@ html {
 }
 
 .pilot__container {
+  display: none;
   position: absolute;
   overflow: hidden;
   inset: 0;
@@ -14722,6 +14724,19 @@ html {
 [type="checkbox"] {
   accent-color: var(--color);
   transition: accent-color var(--speed) var(--easing);
+}
+
+.day-night-scene #sync {
+  display: none;
+}
+
+.thank-you {
+  font-family: sans-serif, system-ui;
+  color: hsl(219 30% 98%); /* night's font color, shown while in day mode */
+  transition: color var(--speed) var(--easing);
+}
+[data-dark-mode="true"] .thank-you {
+  color: hsl(219 30% 20%); /* day's font color, shown while in night mode */
 }
 
 .bear-link {
@@ -15213,6 +15228,7 @@ html {
     <div class="controls"></div>
   
   <input id="sync" type="checkbox" checked/>
+  <span class="thank-you">thank you</span>
 <button class="toggle" aria-pressed="false" title="Toggle Dark Mode">
   <span class="toggle__content">
     <svg aria-hidden=true class="toggle__backdrop" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 290 228">
