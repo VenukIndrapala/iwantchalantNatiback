@@ -100,7 +100,7 @@
 
     setTimeout(() => {
       $('#flowerBlossomOverlay').hide();
-      $('#nextGamePlaceholder').show();
+      if (window.startDayNightToggle) window.startDayNightToggle();
     }, DISPLAY_DURATION);
   };
 })();
