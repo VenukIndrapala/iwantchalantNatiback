@@ -211,7 +211,7 @@
     cancelAnimationFrame(rafId);
     const msg = document.createElement('div');
     msg.className = 'bunny-game-end-message';
-    msg.innerHTML = '<span>All Bunnies Are Happy!</span><small>Great job \u2764\ufe0f</small>';
+    msg.innerHTML = '<span>All Bunnies Are Happy!</span><small>Great job</small>';
     settings.container.appendChild(msg);
 
     setTimeout(() => {
