@@ -7,6 +7,9 @@
       --Code made in👉 Rosebud.ai
       --To get the code go to Rosebud.ai and search "Cute Gun Shooting" -->
     <title>Cute Gun Shotting</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bubblegum+Sans&display=swap" rel="stylesheet">
     <script src="jquery.js"></script>
     <script src="gsap.js"></script>
     <style>
@@ -14730,13 +14733,30 @@ html {
   display: none;
 }
 
-.thank-you {
-  font-family: sans-serif, system-ui;
-  color: hsl(219 30% 98%); /* night's font color, shown while in day mode */
+.day-message,
+.night-message {
+  font-family: 'Bubblegum Sans', cursive, sans-serif;
+  text-align: center;
+  max-width: min(85vw, 520px);
+  padding: 0 1rem;
+  line-height: 1.5;
+  font-size: clamp(0.8rem, 2.2vw, 1.05rem);
   transition: color var(--speed) var(--easing);
 }
-[data-dark-mode="true"] .thank-you {
-  color: hsl(219 30% 20%); /* day's font color, shown while in night mode */
+
+.day-message {
+  color: hsl(219 30% 20%); /* day's own dark color, readable on the light background */
+}
+.night-message {
+  display: none;
+  color: hsl(219 30% 98%); /* night's own light color, readable on the dark background */
+}
+
+[data-dark-mode="true"] .day-message {
+  display: none;
+}
+[data-dark-mode="true"] .night-message {
+  display: block;
 }
 
 .bear-link {
@@ -15280,7 +15300,8 @@ html {
     <div class="controls"></div>
   
   <input id="sync" type="checkbox" checked/>
-  <span class="thank-you">thank you</span>
+  <p class="day-message">Hey Nati, So it's not everyday that i get to meet someone that drinks 100ML of water a day and goes 'I'm hydrated hehe' and at the same time a person who I can talk to about anything and still feel comfortable. I'm pretty sure since it's my birthday the roles should be reversed but hey doesn't look like that's stopping me. So ma'am Thank you so much for everything and for always being there to annoy me or get annoyed by me. I never would have thought I would have a change like this in life but if I can look back and talk to myself I would only tell myself to make that choice sooner because it's the best choice I've ever made, regardless of how it ends I LOVE IT and thank you for being a part of it.  I would also very much like to see you there next year around this time as well in life so don't go anywhere okay thanks.</p>
+  <p class="night-message">Also we are banned from using 'unc', 'Old', 'Walking stick' in this chat from here on out thanks, my birthday my rules no buts *Monkey putting it's tongue out sticker* and since I'm two years older than you now you have to listen to what I have to say, especially when it comes to diet!</p>
 <button class="toggle" aria-pressed="false" title="Toggle Dark Mode">
   <span class="toggle__content">
     <svg aria-hidden=true class="toggle__backdrop" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 290 228">
