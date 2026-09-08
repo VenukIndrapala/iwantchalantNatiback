@@ -938,7 +938,7 @@ class Game {
   }
   handleWin() {
     this.gameOver = true; // Freezes the shooting game immediately (update loop halts enemy/bullet/player logic)
-    this.gameOverTextEl.text('YOU WIN!');
+    this.gameOverTextEl.text('YOU WIN BOWEL CLEANSED');
     this.gameOverMessageEl.show();
     
     setTimeout(() => {
